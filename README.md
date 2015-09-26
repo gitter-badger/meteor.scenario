@@ -9,29 +9,36 @@ Run 'meteor add emmanuelbuah:scenario'
 
 ## Proposed Api/Usage
 ```
+
+Note: Scenario uses SimpleSchema to auto generate values for fields
  
-Assuming the following collections: Users, Post, Comments and following simpleschema's UserSchema, PostSchema and CommentSchema
+Assuming the following collections: Users, Posts, Comments and following simpleschema's UserSchema, PostSchema and CommentSchema. 
+
+
+Scenario.AddCollection("Users",Users,UserSchema);
+Scenario.AddCollection("Posts",Posts,PostSchema);
+Scenario.AddCollection("Comments",Comments,CommentSchema);
 
 //Add a single named record to User Collection 
-Scenario.Add("Emmanuel", { name: .... , ..}).To(Users);
+Scenario.Add("Emmanuel", { name: .... , ..}).To("Users");
 
 //Add a multiple named record to User Collection
-Scenario.Add([{"Eric" : { name: .... , ..}},{"Nick" : { name: .... , ..}}]).To(Users);
+Scenario.Add([{"Eric" : { name: .... , ..}},{"Nick" : { name: .... , ..}}]).To("Users");
 
 //Add a multiple gen record to User Collection
-Scenario.AddRecords(4).To(Users);
+Scenario.AddRecords(4).To("Users");
 
 //Add a single record to Post Collection by user Emmanuel
-Scenario.Add({ title: "My first post"}).To(Posts).Set("CreatedBy").To("Emmanuel");
+Scenario.Add({ title: "My first post"}).To("Posts").Set("CreatedBy").To("Emmanuel");
 
 //Add a multiple record to Post Collection by user Emmanuel, indicating setting createdBy =_id 
-Scenario.AddRecords(10).To(Posts).Set("createdBy").To("Emmanuel","_id");
+Scenario.AddRecords(10).To("Posts").Set("createdBy").To("Emmanuel","_id");
 
-//Add a multiple record to Post Collection randmoizing creator amongts user Emmanuel, Eric and Nick 
-Scenario.AddRecords(10).To(Posts).Set("createdBy").RandomizeAmongst("Emmanuel","Eric","Nick"]).As("Posts");
+//Add a multiple record to Post Collection randmoizing creator amongts user's Emmanuel, Eric and Nick 
+Scenario.AddRecords(10).To("Posts").Set("createdBy").RandomizeAmongst("Emmanuel","Eric","Nick"]).As("Posts");
 
 //Reference record to related records
-Scenario.ForEachIn("Posts").AddRecords(10).To(Comments).Set("postId").ToParent("_id");
+Scenario.ForEachIn("Posts").AddRecords(10).To("Comments").Set("postId").ToParent("_id");
 
 ```
 
