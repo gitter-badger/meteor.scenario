@@ -1,4 +1,4 @@
-#A data mockup 
+#A data mockup package for meteor
 
 Meteor package to design and generate application test data. 
 
